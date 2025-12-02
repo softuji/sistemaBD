@@ -45,12 +45,13 @@ public class UsuarioController {
     @PostMapping("/{usuarioId}/avaliacoes")
     public ResponseEntity<Void> adicionarAvaliacao(
             @PathVariable Integer usuarioId,
+            @RequestParam Integer instrutorId,
             @RequestParam Double peso,
             @RequestParam Double altura,
             @RequestParam(required = false) String observacoes) {
 
         //VALIDA SE É INSTRUTOR/ADMIN
-        autorizacaoService.validarAcessoInstrutor(usuarioId);
+        autorizacaoService.validarAcessoInstrutor(instrutorId);
 
         usuarioService.adicionarAvaliacaoFisica(usuarioId, peso, altura, observacoes);
         return ResponseEntity.ok().build();
@@ -59,11 +60,12 @@ public class UsuarioController {
     @PostMapping("/{usuarioId}/treinos")
     public ResponseEntity<Void> criarPlanoTreino(
             @PathVariable Integer usuarioId,
+            @RequestParam Integer instrutorId,
             @RequestParam String nome,
             @RequestParam String objetivo) {
 
         //VALIDA SE É INSTRUTOR/ADMIN
-        autorizacaoService.validarAcessoInstrutor(usuarioId);
+        autorizacaoService.validarAcessoInstrutor(instrutorId);
 
         usuarioService.criarPlanoTreino(usuarioId, nome, objetivo);
         return ResponseEntity.ok().build();
@@ -81,7 +83,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarUsuarioPorId(@RequestParam Integer id, @RequestBody Usuario usuario) {
+    public ResponseEntity<Void> atualizarUsuarioPorId(@PathVariable Integer id, @RequestBody Usuario usuario) {
         usuarioService.atualizarUsuarioPorId(id, usuario);
         return ResponseEntity.ok().build();
     }

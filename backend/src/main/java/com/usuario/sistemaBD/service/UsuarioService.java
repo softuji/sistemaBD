@@ -93,12 +93,12 @@ public class UsuarioService {
                 .senha(usuario.getSenha() != null ? usuario.getSenha() : usuarioEntity.getSenha())
                 .telefone(usuario.getTelefone() != null ? usuario.getTelefone() : usuarioEntity.getTelefone())
                 .dataNascimento(usuario.getDataNascimento() != null ? usuario.getDataNascimento() : usuarioEntity.getDataNascimento())
-                .tipo(usuarioEntity.getTipo())
+                .tipo(usuario.getTipo() != null ? usuario.getTipo() : usuarioEntity.getTipo())
                 .dataCadastro(usuarioEntity.getDataCadastro())
                 .ativo(usuarioEntity.isAtivo())
-                .plano(usuarioEntity.getPlano() != null ? usuario.getPlano() : usuarioEntity.getPlano())
-                .mongoAvaliacoesId(usuarioEntity.getMongoAvaliacoesId()!= null ? usuario.getMongoAvaliacoesId() : usuarioEntity.getMongoAvaliacoesId())
-                .mongoTreinosId(usuarioEntity.getMongoTreinosId() != null ? usuario.getMongoTreinosId() : usuarioEntity.getMongoTreinosId())
+                .plano(usuario.getPlano() != null ? usuario.getPlano() : usuarioEntity.getPlano())
+                .mongoAvaliacoesId(usuario.getMongoAvaliacoesId() != null ? usuario.getMongoAvaliacoesId() : usuarioEntity.getMongoAvaliacoesId())
+                .mongoTreinosId(usuario.getMongoTreinosId() != null ? usuario.getMongoTreinosId() : usuarioEntity.getMongoTreinosId())
                 .build();
 
         usuarioRepository.saveAndFlush(usuarioAtualizado);
@@ -154,7 +154,7 @@ public class UsuarioService {
     }
 
     public void adicionarAvaliacaoFisica(Integer usuarioId, Double peso, Double altura, String observacoes) {
-        usuarioRepository.findById(usuarioId)
+        Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         AvaliacaoFisica avaliacao = avaliacaoFisicaRepository.findByUsuarioId(usuarioId)
@@ -176,7 +176,13 @@ public class UsuarioService {
                 .build();
 
         avaliacao.getMedidas().add(novaMedida);
-        avaliacaoFisicaRepository.save(avaliacao);
+
+        // SALVA e obtém o ID gerado
+        AvaliacaoFisica avaliacaoSalva = avaliacaoFisicaRepository.save(avaliacao);
+
+        // ATUALIZA o usuário com o ID do MongoDB
+        usuario.setMongoAvaliacoesId(avaliacaoSalva.getId());
+        usuarioRepository.save(usuario);
     }
 
     public List<AvaliacaoFisica.Medida> buscarHistoricoAvaliacoes(Integer usuarioId) {
@@ -280,7 +286,7 @@ public class UsuarioService {
     }
 
     public void criarPlanoTreino(Integer usuarioId, String nome, String objetivo) {
-        usuarioRepository.findById(usuarioId)
+        Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         PlanoTreino planoTreino = PlanoTreino.builder()
@@ -292,7 +298,12 @@ public class UsuarioService {
                 .dataCriacao(LocalDate.now())
                 .build();
 
-        planoTreinoRepository.save(planoTreino);
+        // SALVA e obtém o ID gerado
+        PlanoTreino treinoSalvo = planoTreinoRepository.save(planoTreino);
+
+        // ATUALIZA o usuário com o ID do MongoDB
+        usuario.setMongoTreinosId(treinoSalvo.getId());
+        usuarioRepository.save(usuario);
     }
 
     public void adicionarExercicioPlanoTreino(Integer usuarioId, String nome, Integer series,
