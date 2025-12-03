@@ -37,8 +37,11 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Usuario> login(@RequestParam String email,@RequestParam String senha) {
+    public ResponseEntity<Usuario> login(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+        String senha = credentials.get("senha");
         Usuario usuario = usuarioService.fazerLogin(email, senha);
+
         return ResponseEntity.ok(usuario);
     }
 

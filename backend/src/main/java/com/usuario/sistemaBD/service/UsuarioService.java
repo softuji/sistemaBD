@@ -6,6 +6,7 @@ import com.usuario.sistemaBD.infrastructure.mongodb.document.PlanoTreino;
 import com.usuario.sistemaBD.infrastructure.mongodb.repository.PlanoTreinoRepository;
 import com.usuario.sistemaBD.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,7 @@ public class UsuarioService {
     private final AvaliacaoFisicaRepository avaliacaoFisicaRepository;
     private final PlanoTreinoRepository planoTreinoRepository;
     private final PlanoRepository planoRepository;
-    private final PasswordUtil passwordUtil;
+    private final PasswordEncoder passwordEncoder;
 
     public Usuario cadastrarUsuario(String nome, String email, String senha, String confirmarSenha, String tipo) {
         if (!senha.equals(confirmarSenha)) {
@@ -48,7 +49,7 @@ public class UsuarioService {
             throw new RuntimeException("Tipo deve ser: ALUNO, INSTRUTOR ou ADMIN");
         }
 
-        String senhaHash = passwordUtil.hashPassword(senha);
+        String senhaHash = passwordEncoder.encode(senha);
 
         Usuario usuario = Usuario.builder()
                 .nome(nome)
@@ -59,13 +60,13 @@ public class UsuarioService {
                 .dataCadastro(LocalDate.now())
                 .build();
 
-        return usuarioRepository.saveAndFlush(  usuario);
+        return usuarioRepository.save(usuario);
     }
 
     public Usuario fazerLogin(String email, String senha) {
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        if (!passwordUtil.checkPassword(senha, usuario.getSenha())) {
+        if (!passwordEncoder.matches(senha, usuario.getSenha())) {
             throw new RuntimeException("Senha incorreta");
         }
 

@@ -1,33 +1,147 @@
-HELP.md
+# ====================================
+# BACKEND (Spring Boot/Java/Maven)
+# ====================================
+
+# Maven
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.properties
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Compiled class file
+*.class
 
-### IntelliJ IDEA ###
-.idea
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs
+hs_err_pid*
+
+# ====================================
+# FRONTEND (Node.js/JavaScript)
+# ====================================
+
+# Dependências
+frontend/node_modules/
+frontend/.npm
+frontend/.yarn/
+frontend/.pnp.*
+
+# Variáveis de ambiente
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Builds
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/out/
+
+# Cache
+frontend/.cache/
+
+# Coverage
+frontend/coverage/
+
+# Logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Runtime data
+frontend/.pnp.js
+
+# Sistema
+frontend/.DS_Store
+frontend/Thumbs.db
+
+# ====================================
+# IDEs
+# ====================================
+
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
+*.ids
+*.orig
 
-### NetBeans ###
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# VS Code (DO SEU COLEGA)
+frontend/.vscode/
 .vscode/
+
+# STS
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+
+# ====================================
+# SISTEMA OPERACIONAL
+# ====================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+
+# Linux
+*~
+
+# ====================================
+# OUTROS
+# ====================================
+
+# Arquivos de ajuda
+HELP.md
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Backups
+*.bak
+*.backup

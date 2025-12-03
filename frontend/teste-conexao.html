@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Completo de TODOS Endpoints - Academia Fit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* SEÇÃO DE CONTROLE */
+        .control-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .control-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .control-group h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .form-row {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background: linear-gradient(135deg, #138496 0%, #17a2b8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+        }
+        
+        .btn-purple {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+        }
+        
+        .btn-purple:hover {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
+        }
+        
+        /* SEÇÃO DE ENDPOINTS */
+        .endpoints-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .endpoints-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .endpoint-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .endpoint-card:hover {
+            border-color: #3498db;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .method-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .method-post { background: #49cc90; }
+        .method-get { background: #61affe; }
+        .method-put { background: #fca130; }
+        .method-delete { background: #f93e3e; }
+        
+        .endpoint-title {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .endpoint-url {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            word-break: break-all;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .endpoint-description {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .endpoint-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .endpoint-buttons .btn {
+            padding: 8px 15px;
+            font-size: 13px;
+        }
+        
+        /* SEÇÃO DE RESULTADOS */
+        .results-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .results-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .result-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ddd;
+            transition: all 0.3s;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .result-item.success {
+            border-left-color: #2ecc71;
+            background: #f8fff8;
+        }
+        
+        .result-item.error {
+            border-left-color: #e74c3c;
+            background: #fff8f8;
+        }
+        
+        .result-item.warning {
+            border-left-color: #f39c12;
+            background: #fffbf0;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .result-title {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .result-meta {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .result-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .status-success { background: #2ecc71; }
+        .status-error { background: #e74c3c; }
+        .status-warning { background: #f39c12; }
+        
+        .result-time {
+            font-size: 12px;
+            color: #7f8c8d;
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .result-url {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            word-break: break-all;
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .result-body {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border: 1px solid #e0e0e0;
+        }
+        
+        /* LOADING */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header, .control-section, .endpoints-section, .results-section {
+                padding: 20px;
+            }
+            
+            .control-grid, .endpoints-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .endpoint-buttons {
+                flex-direction: column;
+            }
+            
+            .endpoint-buttons .btn {
+                width: 100%;
+            }
+        }
+        
+        .test-user-presets {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .test-user-presets h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .preset-buttons .btn {
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🧪 Teste Completo de TODOS Endpoints - Academia Fit</h1>
+            <p>Teste completo de todos os endpoints do backend que estão funcionando. Use os controles abaixo para testar cada funcionalidade.</p>
+            <div style="margin-top: 15px; padding: 10px; background: #e8f4fc; border-radius: 8px; display: inline-block;">
+                <strong>Base URL:</strong> <code>http://localhost:8080</code>
+            </div>
+            
+            <!-- NOTA SOBRE @RequestBody NO LOGIN -->
+            <div style="margin-top: 15px; padding: 15px; background: #d4edda; border-radius: 8px; border-left: 4px solid #28a745;">
+                <strong>⚠️ ATENÇÃO: Login Atualizado!</strong>
+                <p style="margin: 5px 0 0 0; font-size: 14px;">
+                    O endpoint <code>POST /usuario/login</code> agora usa <strong>@RequestBody</strong> (JSON no body) em vez de query parameters.<br>
+                    Formato: <code>{"email": "seu@email.com", "senha": "sua_senha"}</code>
+                </p>
+            </div>
+        </div>
+        
+        <!-- SEÇÃO DE CONTROLE -->
+        <section class="control-section">
+            <h2 class="section-title">🎮 Controles de Teste</h2>
+            
+            <div class="control-grid">
+                <!-- USUÁRIOS -->
+                <div class="control-group">
+                    <h3>👤 Usuários</h3>
+                    <div class="form-row">
+                        <label for="userId">ID do Usuário:</label>
+                        <input type="number" id="userId" value="1" min="1">
+                    </div>
+                    <div class="form-row">
+                        <label for="userEmail">Email do Usuário:</label>
+                        <input type="email" id="userEmail" value="sofianemotto@email.com">
+                    </div>
+                    <div class="form-row">
+                        <label for="userPassword">Senha:</label>
+                        <input type="password" id="userPassword" value="467913">
+                    </div>
+                    <div class="btn-grid">
+                        <button class="btn btn-primary" onclick="testarLogin()">
+                            🔐 Testar Login
+                        </button>
+                        <button class="btn btn-success" onclick="testarCadastro()">
+                            📝 Testar Cadastro
+                        </button>
+                        <button class="btn btn-warning" onclick="testarBuscarUsuario()">
+                            🔍 Buscar Usuário
+                        </button>
+                        <button class="btn btn-info" onclick="testarAtualizarUsuario()">
+                            ✏️ Atualizar Usuário
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- INSTRUTOR E TREINOS -->
+                <div class="control-group">
+                    <h3>🏋️ Treinos e Avaliações</h3>
+                    <div class="form-row">
+                        <label for="instrutorId">ID do Instrutor:</label>
+                        <input type="number" id="instrutorId" value="2" min="1">
+                    </div>
+                    <div class="form-row">
+                        <label for="treinoNome">Nome do Treino:</label>
+                        <input type="text" id="treinoNome" value="Treino Hipertrofia">
+                    </div>
+                    <div class="form-row">
+                        <label for="treinoObjetivo">Objetivo do Treino:</label>
+                        <input type="text" id="treinoObjetivo" value="Ganho de massa muscular">
+                    </div>
+                    <div class="btn-grid">
+                        <button class="btn btn-primary" onclick="testarCriarTreino()">
+                            🏋️ Criar Treino
+                        </button>
+                        <button class="btn btn-success" onclick="testarAdicionarExercicio()">
+                            💪 Adicionar Exercício
+                        </button>
+                        <button class="btn btn-warning" onclick="testarBuscarTreinoUsuario()">
+                            🔍 Buscar Treino
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- AVALIAÇÕES E PROGRESSO -->
+                <div class="control-group">
+                    <h3>📊 Avaliações e Progresso</h3>
+                    <div class="form-row">
+                        <label for="avaliacaoPeso">Peso (kg):</label>
+                        <input type="number" id="avaliacaoPeso" value="75.5" step="0.1">
+                    </div>
+                    <div class="form-row">
+                        <label for="avaliacaoAltura">Altura (m):</label>
+                        <input type="number" id="avaliacaoAltura" value="1.78" step="0.01">
+                    </div>
+                    <div class="form-row">
+                        <label for="avaliacaoObservacoes">Observações:</label>
+                        <textarea id="avaliacaoObservacoes" rows="2">Percentual de gordura: 18%</textarea>
+                    </div>
+                    <div class="btn-grid">
+                        <button class="btn btn-primary" onclick="testarAdicionarAvaliacao()">
+                            📈 Adicionar Avaliação
+                        </button>
+                        <button class="btn btn-success" onclick="testarBuscarAvaliacoes()">
+                            📋 Buscar Avaliações
+                        </button>
+                        <button class="btn btn-warning" onclick="testarRegistrarProgresso()">
+                            📊 Registrar Progresso
+                        </button>
+                        <button class="btn btn-info" onclick="testarBuscarGraficos()">
+                            📈 Buscar Gráficos
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- PLANOS -->
+                <div class="control-group">
+                    <h3>💰 Planos</h3>
+                    <div class="form-row">
+                        <label for="planoTipo">Tipo de Plano:</label>
+                        <select id="planoTipo">
+                            <option value="BASICO">Básico</option>
+                            <option value="PREMIUM">Premium</option>
+                            <option value="TOP">Top</option>
+                        </select>
+                    </div>
+                    <div class="btn-grid">
+                        <button class="btn btn-primary" onclick="testarListarPlanos()">
+                            📋 Listar Planos
+                        </button>
+                        <button class="btn btn-success" onclick="testarBuscarPlanoPorTipo()">
+                            🔍 Buscar Plano
+                        </button>
+                        <button class="btn btn-warning" onclick="testarCriarPlanoTop()">
+                            ⭐ Criar Plano Top
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BOTÕES DE AÇÃO EM MASSA -->
+            <div class="control-group" style="margin-top: 20px;">
+                <h3>🚀 Testes em Massa</h3>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-success" onclick="executarFluxoCompleto()">
+                        🚀 Executar Fluxo Completo
+                    </button>
+                    <button class="btn btn-primary" onclick="testarTodosEndpoints()">
+                        🧪 Testar Todos Endpoints
+                    </button>
+                    <button class="btn btn-warning" onclick="testarEndpointsPublicos()">
+                        🌐 Testar Endpoints Públicos
+                    </button>
+                    <button class="btn btn-danger" onclick="limparResultados()">
+                        🗑️ Limpar Resultados
+                    </button>
+                </div>
+                
+                <!-- USUÁRIOS PRÉ-DEFINIDOS -->
+                <div class="test-user-presets">
+                    <h4>👥 Usuários Pré-definidos:</h4>
+                    <div class="preset-buttons">
+                        <button class="btn btn-primary" onclick="preencherUsuario('sofia')">
+                            👩‍🦰 Sofia Nemotto
+                        </button>
+                        <button class="btn btn-success" onclick="preencherUsuario('janderson')">
+                            👨‍🦰 Janderson Mesquita
+                        </button>
+                        <button class="btn btn-warning" onclick="preencherUsuario('carol')">
+                            👩‍🦱 Carol Vaz
+                        </button>
+                        <button class="btn btn-info" onclick="preencherUsuario('novo')">
+                            👤 Novo Usuário
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SEÇÃO DE ENDPOINTS -->
+        <section class="endpoints-section">
+            <h2 class="section-title">🔗 Todos os Endpoints Disponíveis</h2>
+            
+            <div class="endpoints-grid">
+                <!-- AUTENTICAÇÃO -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">POST /usuario/login</div>
+                        <div class="method-badge method-post">POST</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/login</div>
+                    <div class="endpoint-description">
+                        <strong>🔥 ATUALIZADO: @RequestBody</strong><br>
+                        Login de usuário usando JSON no body (email e senha)
+                    </div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-primary" onclick="testarLogin()">
+                            Testar
+                        </button>
+                        <button class="btn btn-info" onclick="copiarCurlLogin()">
+                            📋 Copiar curl
+                        </button>
+                        <button class="btn btn-warning" onclick="gerarComandoPostmanLogin()">
+                            🚀 Postman
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">POST /usuario/cadastro</div>
+                        <div class="method-badge method-post">POST</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/cadastro</div>
+                    <div class="endpoint-description">Cadastro de novo usuário (body JSON)</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-success" onclick="testarCadastro()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- USUÁRIOS -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">GET /usuario</div>
+                        <div class="method-badge method-get">GET</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario?email={email}</div>
+                    <div class="endpoint-description">Buscar usuário por email (query parameter)</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-primary" onclick="testarBuscarUsuario()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">PUT /usuario/{id}</div>
+                        <div class="method-badge method-put">PUT</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/{id}</div>
+                    <div class="endpoint-description">Atualizar dados do usuário (body JSON)</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-warning" onclick="testarAtualizarUsuario()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- PLANOS -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">GET /usuario/planos</div>
+                        <div class="method-badge method-get">GET</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/planos</div>
+                    <div class="endpoint-description">Listar todos os planos disponíveis</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-primary" onclick="testarListarPlanos()">
+                            Testar
+                        </button>
+                        <button class="btn btn-info" onclick="copiarUrlPlanos()">
+                            Copiar URL
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">GET /usuario/planos/{tipo}</div>
+                        <div class="method-badge method-get">GET</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/planos/{tipo}</div>
+                    <div class="endpoint-description">Buscar plano específico por tipo (BASICO, PREMIUM, TOP)</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-primary" onclick="testarBuscarPlanoPorTipo()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">POST /usuario/planos/top</div>
+                        <div class="method-badge method-post">POST</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/planos/top</div>
+                    <div class="endpoint-description">Criar plano TOP (executar apenas 1 vez)</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-warning" onclick="testarCriarPlanoTop()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- AVALIAÇÕES -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">POST /usuario/{id}/avaliacoes</div>
+                        <div class="method-badge method-post">POST</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/{id}/avaliacoes?instrutorId={id}&peso={}&altura={}&observacoes={}</div>
+                    <div class="endpoint-description">Adicionar avaliação física para usuário</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-primary" onclick="testarAdicionarAvaliacao()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">GET /usuario/{id}/avaliacoes</div>
+                        <div class="method-badge method-get">GET</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/{id}/avaliacoes</div>
+                    <div class="endpoint-description">Buscar histórico de avaliações do usuário</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-success" onclick="testarBuscarAvaliacoes()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- PROGRESSO -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">POST /usuario/{id}/progresso</div>
+                        <div class="method-badge method-post">POST</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/{id}/progresso</div>
+                    <div class="endpoint-description">Registrar progresso do usuário (body JSON)</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-primary" onclick="testarRegistrarProgresso()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">GET /usuario/{id}/graficos</div>
+                        <div class="method-badge method-get">GET</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/{id}/graficos</div>
+                    <div class="endpoint-description">Buscar dados para gráficos (precisa de avaliações)</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-warning" onclick="testarBuscarGraficos()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- TREINOS -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">POST /usuario/{id}/treinos</div>
+                        <div class="method-badge method-post">POST</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/{id}/treinos?instrutorId={id}&nome={}&objetivo={}</div>
+                    <div class="endpoint-description">Criar plano de treino para usuário</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-primary" onclick="testarCriarTreino()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">POST /usuario/{id}/treinos/exercicios</div>
+                        <div class="method-badge method-post">POST</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/{id}/treinos/exercicios</div>
+                    <div class="endpoint-description">Adicionar exercício ao plano de treino (body JSON)</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-success" onclick="testarAdicionarExercicio()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">GET /usuario/{id}/treinos</div>
+                        <div class="method-badge method-get">GET</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/{id}/treinos</div>
+                    <div class="endpoint-description">Buscar plano de treino do usuário</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-primary" onclick="testarBuscarTreinoUsuario()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">GET /usuario/treinos/ativos</div>
+                        <div class="method-badge method-get">GET</div>
+                    </div>
+                    <div class="endpoint-url">http://localhost:8080/usuario/treinos/ativos</div>
+                    <div class="endpoint-description">Listar todos os treinos ativos</div>
+                    <div class="endpoint-buttons">
+                        <button class="btn btn-success" onclick="testarListarTreinosAtivos()">
+                            Testar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SEÇÃO DE RESULTADOS -->
+        <section class="results-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="section-title" style="margin-bottom: 0;">📊 Resultados dos Testes</h2>
+                <div class="results-controls">
+                    <button class="btn btn-danger" onclick="limparResultados()">
+                        🗑️ Limpar Tudo
+                    </button>
+                    <button class="btn btn-info" onclick="exportarResultados()">
+                        📥 Exportar JSON
+                    </button>
+                </div>
+            </div>
+            
+            <div id="resultadosContainer">
+                <!-- Resultados aparecerão aqui -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://localhost:8080';
+        let resultados = [];
+        
+        // ========== FUNÇÕES AUXILIARES ==========
+        
+        function getUserId() {
+            return document.getElementById('userId').value;
+        }
+        
+        function getUserEmail() {
+            return document.getElementById('userEmail').value;
+        }
+        
+        function getUserPassword() {
+            return document.getElementById('userPassword').value;
+        }
+        
+        function getInstrutorId() {
+            return document.getElementById('instrutorId').value;
+        }
+        
+        function getTreinoNome() {
+            return document.getElementById('treinoNome').value;
+        }
+        
+        function getTreinoObjetivo() {
+            return document.getElementById('treinoObjetivo').value;
+        }
+        
+        function getAvaliacaoPeso() {
+            return document.getElementById('avaliacaoPeso').value;
+        }
+        
+        function getAvaliacaoAltura() {
+            return document.getElementById('avaliacaoAltura').value;
+        }
+        
+        function getAvaliacaoObservacoes() {
+            return document.getElementById('avaliacaoObservacoes').value;
+        }
+        
+        function getPlanoTipo() {
+            return document.getElementById('planoTipo').value;
+        }
+        
+        function preencherUsuario(tipo) {
+            switch(tipo) {
+                case 'sofia':
+                    document.getElementById('userEmail').value = 'sofianemotto@email.com';
+                    document.getElementById('userPassword').value = '467913';
+                    document.getElementById('userId').value = '1';
+                    break;
+                case 'janderson':
+                    document.getElementById('userEmail').value = 'jandersonmesquita@email.com';
+                    document.getElementById('userPassword').value = '362514';
+                    document.getElementById('userId').value = '2';
+                    break;
+                case 'carol':
+                    document.getElementById('userEmail').value = 'carolvaz@email.com';
+                    document.getElementById('userPassword').value = '147852';
+                    document.getElementById('userId').value = '1';
+                    break;
+                case 'novo':
+                    const timestamp = Date.now();
+                    document.getElementById('userEmail').value = `usuario${timestamp}@email.com`;
+                    document.getElementById('userPassword').value = '123456';
+                    document.getElementById('userId').value = '';
+                    break;
+            }
+        }
+        
+        // ========== FUNÇÃO PRINCIPAL PARA TESTAR ENDPOINTS ==========
+        
+        async function testarEndpoint(nome, metodo, endpoint, dados = null, queryParams = {}) {
+            let url = `${BASE_URL}${endpoint}`;
+            
+            // Substitui {id} pelo ID do usuário
+            const userId = getUserId();
+            url = url.replace(/{id}/g, userId);
+            url = url.replace(/{usuarioId}/g, userId);
+            
+            // Para endpoints que usam query parameters, adiciona à URL
+            if (Object.keys(queryParams).length > 0) {
+                const params = new URLSearchParams();
+                for (const [key, value] of Object.entries(queryParams)) {
+                    if (value !== undefined && value !== null && value !== '') {
+                        params.append(key, value);
+                    }
+                }
+                const queryString = params.toString();
+                if (queryString) {
+                    url += `?${queryString}`;
+                }
+            }
+            
+            console.log(`🧪 Testando: ${metodo} ${url}`);
+            if (dados) console.log('📦 Body Data:', dados);
+            if (queryParams && Object.keys(queryParams).length > 0) console.log('🔗 Query Params:', queryParams);
+            
+            const inicio = Date.now();
+            let response, dadosResposta, sucesso = false, tempo = 0, status = 0;
+            
+            try {
+                const config = {
+                    method: metodo,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                
+                // Adiciona body se houver dados (para POST e PUT com body JSON)
+                if (dados && (metodo === 'POST' || metodo === 'PUT')) {
+                    config.body = JSON.stringify(dados);
+                }
+                
+                response = await fetch(url, config);
+                tempo = Date.now() - inicio;
+                status = response.status;
+                
+                try {
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        dadosResposta = await response.json();
+                    } else {
+                        const texto = await response.text();
+                        dadosResposta = texto ? { texto: texto } : { mensagem: 'Resposta vazia' };
+                    }
+                } catch (e) {
+                    dadosResposta = { erro: 'Não foi possível parsear resposta', detalhe: e.message };
+                }
+                
+                sucesso = response.ok;
+                
+            } catch (error) {
+                tempo = Date.now() - inicio;
+                dadosResposta = { erro: 'Erro de conexão', detalhe: error.message };
+            }
+            
+            // Adiciona ao histórico de resultados
+            const resultado = {
+                id: Date.now(),
+                nome,
+                metodo,
+                url,
+                sucesso,
+                status,
+                tempo,
+                dados: dadosResposta,
+                timestamp: new Date().toISOString(),
+                body: dados,
+                queryParams: queryParams && Object.keys(queryParams).length > 0 ? queryParams : null
+            };
+            
+            resultados.unshift(resultado); // Adiciona no início
+            exibirResultado(resultado);
+            
+            return resultado;
+        }
+        
+        // ========== TESTES INDIVIDUAIS ==========
+        
+        async function testarLogin() {
+            const email = getUserEmail();
+            const senha = getUserPassword();
+            
+            const dados = {
+                email: email,
+                senha: senha
+            };
+            
+            await testarEndpoint('Login', 'POST', '/usuario/login', dados);
+        }
+        
+        async function testarCadastro() {
+            const email = getUserEmail();
+            const senha = getUserPassword();
+            const dados = {
+                nome: `Usuário Teste ${Date.now()}`,
+                email: email,
+                senha: senha,
+                confirmarSenha: senha,
+                tipo: 'ALUNO'
+            };
+            await testarEndpoint('Cadastro', 'POST', '/usuario/cadastro', dados);
+        }
+        
+        async function testarBuscarUsuario() {
+            const email = getUserEmail();
+            await testarEndpoint('Buscar Usuário', 'GET', '/usuario', null, { email });
+        }
+        
+        async function testarAtualizarUsuario() {
+            const userId = getUserId();
+            if (!userId || userId === '') {
+                alert('Digite um ID de usuário válido');
+                return;
+            }
+            
+            const dados = {
+                nome: `Usuário Atualizado ${new Date().toLocaleTimeString()}`,
+                telefone: '(11) 99999-9999'
+            };
+            await testarEndpoint('Atualizar Usuário', 'PUT', `/usuario/${userId}`, dados);
+        }
+        
+        async function testarListarPlanos() {
+            await testarEndpoint('Listar Planos', 'GET', '/usuario/planos');
+        }
+        
+        async function testarBuscarPlanoPorTipo() {
+            const tipo = getPlanoTipo();
+            await testarEndpoint(`Buscar Plano ${tipo}`, 'GET', `/usuario/planos/${tipo}`);
+        }
+        
+        async function testarCriarPlanoTop() {
+            await testarEndpoint('Criar Plano Top', 'POST', '/usuario/planos/top');
+        }
+        
+        async function testarAdicionarAvaliacao() {
+            const instrutorId = getInstrutorId();
+            const peso = getAvaliacaoPeso();
+            const altura = getAvaliacaoAltura();
+            const observacoes = getAvaliacaoObservacoes();
+            
+            const queryParams = {
+                instrutorId: instrutorId,
+                peso: peso,
+                altura: altura
+            };
+            
+            if (observacoes && observacoes.trim() !== '') {
+                queryParams.observacoes = observacoes;
+            }
+            
+            await testarEndpoint('Adicionar Avaliação', 'POST', '/usuario/{id}/avaliacoes', null, queryParams);
+        }
+        
+        async function testarBuscarAvaliacoes() {
+            await testarEndpoint('Buscar Avaliações', 'GET', '/usuario/{id}/avaliacoes');
+        }
+        
+        async function testarRegistrarProgresso() {
+            const dados = {
+                peso: 74.5,
+                altura: 1.78,
+                frequencia: 4,
+                forca: 8.5,
+                resistencia: 7.5,
+                observacoes: 'Progresso bom esta semana, mantendo dieta'
+            };
+            await testarEndpoint('Registrar Progresso', 'POST', '/usuario/{id}/progresso', dados);
+        }
+        
+        async function testarBuscarGraficos() {
+            await testarEndpoint('Buscar Gráficos', 'GET', '/usuario/{id}/graficos');
+        }
+        
+        async function testarCriarTreino() {
+            const instrutorId = getInstrutorId();
+            const nome = getTreinoNome();
+            const objetivo = getTreinoObjetivo();
+            
+            const queryParams = {
+                instrutorId: instrutorId,
+                nome: nome,
+                objetivo: objetivo
+            };
+            
+            await testarEndpoint('Criar Treino', 'POST', '/usuario/{id}/treinos', null, queryParams);
+        }
+        
+        async function testarAdicionarExercicio() {
+            const dados = {
+                nomeExercicio: 'Supino Reto',
+                series: 4,
+                repeticoes: '10-12',
+                carga: '40kg',
+                observacoes: 'Execução perfeita, manter técnica'
+            };
+            await testarEndpoint('Adicionar Exercício', 'POST', '/usuario/{id}/treinos/exercicios', dados);
+        }
+        
+        async function testarBuscarTreinoUsuario() {
+            await testarEndpoint('Buscar Treino do Usuário', 'GET', '/usuario/{id}/treinos');
+        }
+        
+        async function testarListarTreinosAtivos() {
+            await testarEndpoint('Listar Treinos Ativos', 'GET', '/usuario/treinos/ativos');
+        }
+        
+        // ========== TESTES EM MASSA ==========
+        
+        async function executarFluxoCompleto() {
+            console.log('🚀 Executando fluxo completo de testes...');
+            
+            // 1. Testar login (agora com body JSON)
+            await testarLogin();
+            
+            // 2. Buscar usuário
+            await testarBuscarUsuario();
+            
+            // 3. Listar planos
+            await testarListarPlanos();
+            
+            // 4. Buscar plano premium
+            document.getElementById('planoTipo').value = 'PREMIUM';
+            await testarBuscarPlanoPorTipo();
+            
+            // 5. Adicionar avaliação (usa query params)
+            await testarAdicionarAvaliacao();
+            
+            // 6. Buscar avaliações
+            await testarBuscarAvaliacoes();
+            
+            // 7. Criar treino (usa query params)
+            await testarCriarTreino();
+            
+            // 8. Adicionar exercício (usa body JSON)
+            await testarAdicionarExercicio();
+            
+            // 9. Buscar treino do usuário
+            await testarBuscarTreinoUsuario();
+            
+            // 10. Listar treinos ativos
+            await testarListarTreinosAtivos();
+            
+            // 11. Registrar progresso (usa body JSON)
+            await testarRegistrarProgresso();
+            
+            // 12. Buscar gráficos (pode não ter dados suficientes)
+            await testarBuscarGraficos();
+            
+            console.log('✅ Fluxo completo executado!');
+        }
+        
+        async function testarTodosEndpoints() {
+            console.log('🧪 Testando TODOS os endpoints...');
+            
+            // Grupo de testes
+            const testes = [
+                () => testarListarPlanos(),
+                () => testarLogin(),  // Agora com body JSON
+                () => testarBuscarUsuario(),
+                () => testarBuscarPlanoPorTipo(),
+                () => testarAdicionarAvaliacao(),
+                () => testarBuscarAvaliacoes(),
+                () => testarCriarTreino(),
+                () => testarAdicionarExercicio(),
+                () => testarBuscarTreinoUsuario(),
+                () => testarListarTreinosAtivos()
+            ];
+            
+            // Executa sequencialmente
+            for (const teste of testes) {
+                await teste();
+                await new Promise(resolve => setTimeout(resolve, 500)); // Pequena pausa
+            }
+            
+            console.log('✅ Todos os endpoints testados!');
+        }
+        
+        async function testarEndpointsPublicos() {
+            console.log('🌐 Testando endpoints públicos...');
+            
+            await testarListarPlanos();
+            document.getElementById('planoTipo').value = 'PREMIUM';
+            await testarBuscarPlanoPorTipo();
+            
+            console.log('✅ Endpoints públicos testados!');
+        }
+        
+        // ========== FUNÇÕES DE INTERFACE ==========
+        
+        function exibirResultado(resultado) {
+            const container = document.getElementById('resultadosContainer');
+            const resultadoDiv = document.createElement('div');
+            
+            const tipo = resultado.sucesso ? 'success' : 
+                        (resultado.status === 401 || resultado.status === 403) ? 'warning' : 'error';
+            
+            resultadoDiv.className = `result-item ${tipo}`;
+            
+            let bodyInfo = '';
+            if (resultado.body) {
+                bodyInfo = `<div style="margin-bottom: 8px; padding: 8px; background: #e8f4fc; border-radius: 4px;">
+                    <strong>📦 Body enviado:</strong> <code>${JSON.stringify(resultado.body)}</code>
+                </div>`;
+            }
+            
+            let queryInfo = '';
+            if (resultado.queryParams) {
+                queryInfo = `<div style="margin-bottom: 8px; padding: 8px; background: #fff3cd; border-radius: 4px;">
+                    <strong>🔗 Query Params:</strong> <code>${JSON.stringify(resultado.queryParams)}</code>
+                </div>`;
+            }
+            
+            resultadoDiv.innerHTML = `
+                <div class="result-header">
+                    <div class="result-title">
+                        ${resultado.sucesso ? '✅' : '❌'} ${resultado.nome}
+                    </div>
+                    <div class="result-meta">
+                        <div class="result-status status-${tipo}">
+                            ${resultado.status || 'ERRO'}
+                        </div>
+                        <div class="result-time">
+                            ⏱️ ${resultado.tempo}ms
+                        </div>
+                    </div>
+                </div>
+                <div class="result-url">${resultado.metodo} ${resultado.url}</div>
+                ${bodyInfo}
+                ${queryInfo}
+                <div class="result-body">${JSON.stringify(resultado.dados, null, 2)}</div>
+            `;
+            
+            container.insertBefore(resultadoDiv, container.firstChild);
+            
+            // Limita a 20 resultados visíveis
+            const resultadosVisiveis = container.getElementsByClassName('result-item');
+            if (resultadosVisiveis.length > 20) {
+                container.removeChild(resultadosVisiveis[resultadosVisiveis.length - 1]);
+            }
+            
+            // Scroll para o novo resultado
+            resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function limparResultados() {
+            document.getElementById('resultadosContainer').innerHTML = '';
+            resultados = [];
+        }
+        
+        function exportarResultados() {
+            if (resultados.length === 0) {
+                alert('Nenhum resultado para exportar');
+                return;
+            }
+            
+            const dados = {
+                timestamp: new Date().toISOString(),
+                baseUrl: BASE_URL,
+                totalTestes: resultados.length,
+                testes: resultados
+            };
+            
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `testes-endpoints-${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function copiarCurlLogin() {
+            const email = getUserEmail();
+            const senha = getUserPassword();
+            const curlCommand = `curl -X POST "${BASE_URL}/usuario/login" -H "Content-Type: application/json" -d '{"email":"${email}","senha":"${senha}"}'`;
+            
+            navigator.clipboard.writeText(curlCommand).then(() => {
+                alert('Comando curl copiado para a área de transferência!');
+            });
+        }
+        
+        function gerarComandoPostmanLogin() {
+            const email = getUserEmail();
+            const senha = getUserPassword();
+            
+            const postmanCommand = {
+                "method": "POST",
+                "url": `${BASE_URL}/usuario/login`,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": JSON.stringify({ email, senha }, null, 2)
+                }
+            };
+            
+            const jsonString = JSON.stringify(postmanCommand, null, 2);
+            
+            // Cria um modal para mostrar o comando
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-width: 80%;
+                max-height: 80%;
+                overflow: auto;
+            `;
+            
+            modalContent.innerHTML = `
+                <h3>📋 Comando para Postman</h3>
+                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow: auto;">${jsonString}</pre>
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button onclick="copiarTextoParaClipboard('${jsonString.replace(/'/g, "\\'")}')" 
+                            style="padding: 10px 15px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        📋 Copiar JSON
+                    </button>
+                    <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                            style="padding: 10px 15px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        ❌ Fechar
+                    </button>
+                </div>
+            `;
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+        }
+        
+        function copiarTextoParaClipboard(texto) {
+            navigator.clipboard.writeText(texto).then(() => {
+                alert('Texto copiado para a área de transferência!');
+            });
+        }
+        
+        function copiarUrlPlanos() {
+            const url = `${BASE_URL}/usuario/planos`;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL copiada para a área de transferência!');
+            });
+        }
+        
+        // ========== INICIALIZAÇÃO ==========
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Teste de TODOS Endpoints - Academia Fit');
+            console.log('🔗 Base URL:', BASE_URL);
+            console.log('📝 Endpoints disponíveis para teste');
+            
+            // Preenche com usuário Carol Vaz por padrão
+            preencherUsuario('sofia');
+            
+            // Testa conexão inicial com planos
+            setTimeout(() => {
+                testarListarPlanos();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
