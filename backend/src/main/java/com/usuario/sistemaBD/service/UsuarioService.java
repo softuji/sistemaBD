@@ -91,11 +91,33 @@ public class UsuarioService {
         Usuario usuarioEntity = usuarioRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("Usuário não encontrado"));
 
+        // Se uma nova senha foi fornecida, aplicar hash BCrypt
+        // Se não foi fornecida, manter a senha atual
+        String senhaHash = usuarioEntity.getSenha(); // mantém a atual por padrão
+
+        if (usuario.getSenha() != null && !usuario.getSenha().trim().isEmpty()) {
+            // IMPORTANTE: Verifica se a senha fornecida já está em formato BCrypt
+            String senhaFornecida = usuario.getSenha();
+
+            // Verifica se a senha fornecida já está em formato BCrypt
+            boolean isBCrypt = senhaFornecida.startsWith("$2a$") ||
+                    senhaFornecida.startsWith("$2b$") ||
+                    senhaFornecida.startsWith("$2y$");
+
+            if (!isBCrypt) {
+                // Aplica hash BCrypt apenas se não for um hash já
+                senhaHash = passwordEncoder.encode(senhaFornecida);
+            } else {
+                // Se já for BCrypt, mantém (mas cuidado com segurança!)
+                senhaHash = senhaFornecida;
+            }
+        }
+
         Usuario usuarioAtualizado = Usuario.builder()
                 .id(usuarioEntity.getId())
                 .email(usuario.getEmail() != null ? usuario.getEmail() : usuarioEntity.getEmail())
                 .nome(usuario.getNome() != null ? usuario.getNome() : usuarioEntity.getNome())
-                .senha(usuario.getSenha() != null ? usuario.getSenha() : usuarioEntity.getSenha())
+                .senha(senhaHash)
                 .telefone(usuario.getTelefone() != null ? usuario.getTelefone() : usuarioEntity.getTelefone())
                 .dataNascimento(usuario.getDataNascimento() != null ? usuario.getDataNascimento() : usuarioEntity.getDataNascimento())
                 .tipo(usuario.getTipo() != null ? usuario.getTipo() : usuarioEntity.getTipo())
