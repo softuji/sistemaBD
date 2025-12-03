@@ -4,6 +4,7 @@ import com.usuario.sistemaBD.infrastructure.jpa.entity.Plano;
 import com.usuario.sistemaBD.infrastructure.jpa.repository.PlanoRepository;
 import com.usuario.sistemaBD.infrastructure.mongodb.document.PlanoTreino;
 import com.usuario.sistemaBD.infrastructure.mongodb.repository.PlanoTreinoRepository;
+import com.usuario.sistemaBD.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class UsuarioService {
     private final AvaliacaoFisicaRepository avaliacaoFisicaRepository;
     private final PlanoTreinoRepository planoTreinoRepository;
     private final PlanoRepository planoRepository;
+    private final PasswordUtil passwordUtil;
 
     public Usuario cadastrarUsuario(String nome, String email, String senha, String confirmarSenha, String tipo) {
         if (!senha.equals(confirmarSenha)) {
@@ -46,10 +48,12 @@ public class UsuarioService {
             throw new RuntimeException("Tipo deve ser: ALUNO, INSTRUTOR ou ADMIN");
         }
 
+        String senhaHash = passwordUtil.hashPassword(senha);
+
         Usuario usuario = Usuario.builder()
                 .nome(nome)
                 .email(email)
-                .senha(senha)
+                .senha(senhaHash)
                 .tipo(tipoUsuario)
                 .ativo(true)
                 .dataCadastro(LocalDate.now())
@@ -61,7 +65,7 @@ public class UsuarioService {
     public Usuario fazerLogin(String email, String senha) {
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        if (!usuario.getSenha().equals(senha)) {
+        if (!passwordUtil.checkPassword(senha, usuario.getSenha())) {
             throw new RuntimeException("Senha incorreta");
         }
 
@@ -228,7 +232,17 @@ public class UsuarioService {
         AvaliacaoFisica avaliacao = avaliacaoFisicaRepository.findByUsuarioId(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Avaliação física não encontrada"));
 
+
         Map<String, Object> dadosGraficos = new HashMap<>();
+
+        if (avaliacao.getMedidas() == null || avaliacao.getMedidas().isEmpty()) {
+            dadosGraficos.put("peso_evolucao", new HashMap<>());
+            dadosGraficos.put("imc_evolucao", new HashMap<>());
+            dadosGraficos.put("forca_evolucao", new HashMap<>());
+            dadosGraficos.put("resistencia_evolucao", new HashMap<>());
+            dadosGraficos.put("estatisticas", new HashMap<>());
+            return dadosGraficos;
+        }
 
         dadosGraficos.put("peso_evolucao", avaliacao.getMedidas().stream()
                 .collect(Collectors.toMap(
