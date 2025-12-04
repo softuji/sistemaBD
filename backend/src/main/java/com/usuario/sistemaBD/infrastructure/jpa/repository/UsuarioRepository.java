@@ -12,6 +12,10 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Optional<Usuario> findByEmail(String email);
 
+    Long countByTipo(String tipo);
+
+    Long countByTipoAndStatus(String tipo, String status);
+
     @Transactional
     void deleteByEmail(String email);
 }

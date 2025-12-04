@@ -135,6 +135,19 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public Map<String, Long> getContagemUsuarios() {
+        Long totalAlunos = usuarioRepository.countByTipo("ALUNO");
+        Long alunosAtivos = usuarioRepository.countByTipoAndStatus("ALUNO", "ATIVO");
+        Long totalInstrutores = usuarioRepository.countByTipo("INSTRUTOR");
+
+        Map<String, Long> contagem = new HashMap<>();
+        contagem.put("alunos", totalAlunos != null ? totalAlunos : 0L);
+        contagem.put("alunosAtivos", alunosAtivos != null ? alunosAtivos : 0L);
+        contagem.put("instrutores", totalInstrutores != null ? totalInstrutores : 0L);
+
+        return contagem;
+    }
+
     public Plano criarPlanoBasico() {
         return planoRepository.save(Plano.builder()
                 .tipo(Plano.TipoPlano.BASICO)

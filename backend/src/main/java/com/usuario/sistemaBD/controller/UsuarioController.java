@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,6 +95,12 @@ public class UsuarioController {
     @GetMapping("/todos")
     public ResponseEntity<List<Usuario>> listarTodosUsuarios() {
         return ResponseEntity.ok(usuarioService.listarTodosUsuarios());
+    }
+
+    @GetMapping("/contagem")
+    public ResponseEntity<Map<String, Long>> getContagemUsuarios() {
+        Map<String, Long> contagem = usuarioService.getContagemUsuarios();
+        return ResponseEntity.ok(contagem);
     }
 
     @PostMapping("/planos/basico")
