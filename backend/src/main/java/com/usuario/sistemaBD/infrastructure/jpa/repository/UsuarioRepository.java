@@ -12,9 +12,8 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Optional<Usuario> findByEmail(String email);
 
-    int countByTipo(String tipo);
+    int countByTipo(Usuario.TipoUsuario tipo);
 
-    int countByTipoAndStatus(String tipo, String status);
 
     @Transactional
     void deleteByEmail(String email);

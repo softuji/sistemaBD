@@ -136,16 +136,15 @@ public class UsuarioService {
     }
 
     public Map<String, Integer> getContagemUsuarios() {
-        int totalAlunos = usuarioRepository.countByTipo("ALUNO");
-        int alunosAtivos = usuarioRepository.countByTipoAndStatus("ALUNO", "ATIVO");
-        int totalInstrutores = usuarioRepository.countByTipo("INSTRUTOR");
+        // Converta String para Enum
+        int totalAlunos = usuarioRepository.countByTipo(Usuario.TipoUsuario.ALUNO);
+        int totalInstrutores = usuarioRepository.countByTipo(Usuario.TipoUsuario.INSTRUTOR);
 
         Map<String, Integer> contagem = new HashMap<>();
         contagem.put("alunos", totalAlunos);
-        contagem.put("alunosAtivos", alunosAtivos);
-        contagem.put("instrutores", totalInstrutores);
-
+        contagem.put("instrutores", totalInstrutores );
         return contagem;
+
     }
 
     public Plano criarPlanoBasico() {
