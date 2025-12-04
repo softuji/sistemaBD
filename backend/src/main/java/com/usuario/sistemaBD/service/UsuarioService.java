@@ -135,15 +135,15 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Map<String, Long> getContagemUsuarios() {
-        Long totalAlunos = usuarioRepository.countByTipo("ALUNO");
-        Long alunosAtivos = usuarioRepository.countByTipoAndStatus("ALUNO", "ATIVO");
-        Long totalInstrutores = usuarioRepository.countByTipo("INSTRUTOR");
+    public Map<String, Integer> getContagemUsuarios() {
+        int totalAlunos = usuarioRepository.countByTipo("ALUNO");
+        int alunosAtivos = usuarioRepository.countByTipoAndStatus("ALUNO", "ATIVO");
+        int totalInstrutores = usuarioRepository.countByTipo("INSTRUTOR");
 
-        Map<String, Long> contagem = new HashMap<>();
-        contagem.put("alunos", totalAlunos != null ? totalAlunos : 0L);
-        contagem.put("alunosAtivos", alunosAtivos != null ? alunosAtivos : 0L);
-        contagem.put("instrutores", totalInstrutores != null ? totalInstrutores : 0L);
+        Map<String, Integer> contagem = new HashMap<>();
+        contagem.put("alunos", totalAlunos);
+        contagem.put("alunosAtivos", alunosAtivos);
+        contagem.put("instrutores", totalInstrutores);
 
         return contagem;
     }

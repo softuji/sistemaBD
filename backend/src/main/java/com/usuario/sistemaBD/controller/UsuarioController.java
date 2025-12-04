@@ -98,8 +98,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/contagem")
-    public ResponseEntity<Map<String, Long>> getContagemUsuarios() {
-        Map<String, Long> contagem = usuarioService.getContagemUsuarios();
+    public ResponseEntity<Map<String, Integer>> getContagemUsuarios() {
+        Map<String, Integer> contagem = usuarioService.getContagemUsuarios();
         return ResponseEntity.ok(contagem);
     }
 
